@@ -35,11 +35,9 @@ ENV         KUBECONFIG=/.kube/config
 ENTRYPOINT  ["/init", "kubectl"]
 CMD         ["version", "--client"]
 
+RUN         apk add --no-cache --virtual .run-deps \
+                ca-certificates
+
 COPY        --from=s6 /usr/local/bin /
 COPY        --from=kubectl /usr/local/bin/kubectl /usr/local/bin/kubectl
-
-RUN         apk add --no-cache --virtual .run-deps \
-                ca-certificates && \
-            kubectl version --client
-
 COPY        --chown=root:root rootfs/cont-init.d /etc/cont-init.d
