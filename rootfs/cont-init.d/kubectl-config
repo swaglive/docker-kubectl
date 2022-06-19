@@ -2,6 +2,7 @@
 kubectl config set contexts.default.cluster default
 kubectl config set contexts.default.user default
 kubectl config set current-context default
+kubectl config set contexts.default.namespace default
 
 [ ! -z "$KUBECONFIG_CA" ] && kubectl config set clusters.default.certificate-authority-data $KUBECONFIG_CA
 [ ! -z "$KUBECONFIG_SERVER" ] && kubectl config set clusters.default.server $KUBECONFIG_SERVER
