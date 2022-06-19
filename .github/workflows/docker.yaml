@@ -46,11 +46,12 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        images: |
+        images: |-
           swaglive/kubectl
           ghcr.io/${{ github.repository_owner }}/kubectl
-        tags: |
-          type=raw,value=latest,enable=${{ !!matrix.latest }}
+        flavor: |-
+          latest=${{ !!matrix.latest }}
+        tags: |-
           type=semver,pattern={{major}},value=${{ matrix.version }}
           type=semver,pattern={{major}}.{{minor}},value=${{ matrix.version }}
           type=semver,pattern={{major}}.{{minor}}.{{patch}},value=${{ matrix.version }}
