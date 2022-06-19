@@ -17,6 +17,7 @@ jobs:
       - version: "1.22.10"
       - version: "1.23.7"
       - version: "1.24.1"
+        latest: true
 
     steps:
     - name: Checkout
@@ -47,11 +48,8 @@ jobs:
         images: |
           swaglive/kubectl
           ghcr.io/${{ github.repository_owner }}/kubectl
-        flavor: |
-          latest=auto
-          # set latest tag for default branch
-          type=raw,value=latest,enable={{is_default_branch}}
         tags: |
+          type=raw,value=latest,enable=${{ matrix.latest }}
           type=semver,pattern={{major}},value=${{ matrix.version }}
           type=semver,pattern={{major}}.{{minor}},value=${{ matrix.version }}
           type=semver,pattern={{major}}.{{minor}}.{{patch}},value=${{ matrix.version }}
