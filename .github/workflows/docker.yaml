@@ -52,7 +52,6 @@ jobs:
         flavor: |-
           latest=${{ !!matrix.latest }}
         tags: |-
-          type=semver,pattern={{major}},value=${{ matrix.version }}
           type=semver,pattern={{major}}.{{minor}},value=${{ matrix.version }}
           type=semver,pattern={{major}}.{{minor}}.{{patch}},value=${{ matrix.version }}
 
