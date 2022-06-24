@@ -32,7 +32,7 @@ ENV         S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 ENV         S6_KEEP_ENV=1
 ENV         KUBECONFIG=/.kube/config
 
-ENTRYPOINT  ["/init", "kubectl"]
+ENTRYPOINT  ["/init", "bash", "/kubectl.sh"]
 CMD         ["version", "--client"]
 
 RUN         apk add --no-cache --virtual .run-deps \
@@ -41,3 +41,5 @@ RUN         apk add --no-cache --virtual .run-deps \
 COPY        --from=s6 /usr/local/bin /
 COPY        --from=kubectl /usr/local/bin/kubectl /usr/local/bin/kubectl
 COPY        --chown=root:root rootfs/cont-init.d /etc/cont-init.d
+
+COPY        ./kubectl.sh /kubectl.sh
