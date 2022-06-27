@@ -1,4 +1,4 @@
-ARG         base=bash:5-alpine3.15
+ARG         base=alpine:3.16
 
 FROM        ${base} as kubectl
 
@@ -36,7 +36,8 @@ ENTRYPOINT  ["/init", "kubectl"]
 CMD         ["version", "--client"]
 
 RUN         apk add --no-cache --virtual .run-deps \
-                ca-certificates
+                ca-certificates \
+                bash
 
 COPY        --from=s6 /usr/local/bin /
 COPY        --from=kubectl /usr/local/bin/kubectl /usr/local/bin/kubectl
