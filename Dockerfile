@@ -26,7 +26,7 @@ RUN         apk add --no-cache --virtual .build-deps \
 
 ###
 
-FROM        ${base} as base
+FROM        ${base}
 
 ENV         S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 ENV         S6_KEEP_ENV=1
