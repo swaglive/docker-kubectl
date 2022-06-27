@@ -1,5 +1,4 @@
-ARG         base=alpine:3.16
-ARG         bashbase=bash:5-alpine3.15
+ARG         base=bash:5-alpine3.15
 
 FROM        ${base} as kubectl
 
@@ -27,7 +26,7 @@ RUN         apk add --no-cache --virtual .build-deps \
 
 ###
 
-FROM        ${bashbase} as bash
+FROM        ${base} as base
 
 ENV         S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 ENV         S6_KEEP_ENV=1
