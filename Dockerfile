@@ -2,7 +2,7 @@ ARG         base=alpine:3.17
 
 FROM        ${base} as kubectl
 
-ARG         version=1.24.1
+ARG         version=
 ARG         url=https://dl.k8s.io/release/v${version}/bin/linux/amd64/kubectl
 
 RUN         apk add --no-cache --virtual .build-deps \
