@@ -16,7 +16,7 @@ RUN         apk add --no-cache --virtual .build-deps \
 
 FROM        ${base} as s6
 
-ARG         s6_version=3.1.0.1
+ARG         s6_version=3.1.5.0
 
 RUN         apk add --no-cache --virtual .build-deps \
                 curl && \
