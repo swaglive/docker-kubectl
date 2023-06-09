@@ -1,4 +1,4 @@
-ARG         base=alpine:3.17
+ARG         base=alpine:3.18
 
 FROM        ${base} as kubectl
 
@@ -14,31 +14,17 @@ RUN         apk add --no-cache --virtual .build-deps \
 
 ###
 
-FROM        ${base} as s6
-
-ARG         s6_version=3.1.5.0
-
-RUN         apk add --no-cache --virtual .build-deps \
-                curl && \
-            curl -L https://github.com/just-containers/s6-overlay/releases/download/v${s6_version}/s6-overlay-noarch.tar.xz | tar -Jxvp -C /usr/local/bin && \
-            curl -L https://github.com/just-containers/s6-overlay/releases/download/v${s6_version}/s6-overlay-x86_64.tar.xz | tar -Jxvp -C /usr/local/bin && \
-            apk del .build-deps
-
-###
-
 FROM        ${base}
 
-ENV         S6_BEHAVIOUR_IF_STAGE2_FAILS=2
-ENV         S6_KEEP_ENV=1
 ENV         KUBECONFIG=/.kube/config
 
-ENTRYPOINT  ["/init", "kubectl"]
+ENTRYPOINT  ["tini", "--", "/docker-entrypoint.sh", "kubectl"]
 CMD         ["version", "--client"]
 
 RUN         apk add --no-cache --virtual .run-deps \
                 ca-certificates \
-                bash
+                bash \
+                tini
 
-COPY        --from=s6 /usr/local/bin /
 COPY        --from=kubectl /usr/local/bin/kubectl /usr/local/bin/kubectl
-COPY        --chown=root:root rootfs/cont-init.d /etc/cont-init.d
+COPY        docker-entrypoint.sh .
